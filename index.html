@@ -2,135 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Malla Interactiva Completa</title>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .ciclo { margin-top: 20px; }
-    .curso {
-      border: 1px solid #000;
-      padding: 10px;
-      margin: 5px;
-      display: inline-block;
-      cursor: pointer;
-      background-color: #eee;
-    }
-    .bloqueado {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  </style>
+  <title>Malla Interactiva</title>
+  <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
-  <h1>Malla Curricular Interactiva - 10 Ciclos</h1>
-  <div id="cursos"></div>
-  <div id="info" style="margin-top: 30px; font-weight: bold;"></div>
+  <h1>Malla Interactiva</h1>
+  <div class="malla">
+    <!-- CICLO 1 -->
+    <div class="curso" data-id="metodologia"><label><input type="checkbox" /> Metodología de aprendizaje universitario</label></div>
+    <div class="curso" data-id="comunicacion1"><label><input type="checkbox" /> Comunicación I</label></div>
+    <div class="curso" data-id="economia"><label><input type="checkbox" /> Fundamentos de la economía</label></div>
+    <div class="curso" data-id="administracion"><label><input type="checkbox" /> Fundamentos de la Administración</label></div>
+    <div class="curso" data-id="matematica"><label><input type="checkbox" /> Matemática</label></div>
 
-  <script>
-    const cursos = {
-      'metodologia': { nombre: 'Metodología de aprendizaje universitario', requisitos: [] },
-      'comunicacion1': { nombre: 'Comunicación I', requisitos: [] },
-      'economia': { nombre: 'Fundamentos de la economía', requisitos: [] },
-      'administracion': { nombre: 'Fundamentos de la Administración', requisitos: [] },
-      'matematica': { nombre: 'Matemática', requisitos: [] },
-      'recursos': { nombre: 'Recursos digitales', requisitos: [] },
-      'comunicacion2': { nombre: 'Comunicación II', requisitos: ['comunicacion1'] },
-      'microeconomia': { nombre: 'Microeconomía', requisitos: ['economia'] },
-      'contabilidad': { nombre: 'Contabilidad general', requisitos: [] },
-      'matempresarial': { nombre: 'Matemática empresarial', requisitos: ['matematica'] },
-      'filosofia': { nombre: 'Filosofía y pensamiento crítico', requisitos: [] },
-      'realidad': { nombre: 'Realidad nacional y global', requisitos: [] },
-      'costos': { nombre: 'Gestión de costos y presupuestos', requisitos: ['contabilidad'] },
-      'macroeconomia': { nombre: 'Macroeconomía', requisitos: ['microeconomia'] },
-      'diseno': { nombre: 'Diseño organizacional', requisitos: ['administracion'] },
-      'estadistica1': { nombre: 'Estadística aplicada a los negocios', requisitos: ['matempresarial'] },
-      'responsabilidad': { nombre: 'Responsabilidad social empresarial', requisitos: [] },
-      'marketing': { nombre: 'Fundamentos del marketing', requisitos: [] },
-      'contabilidadg': { nombre: 'Contabilidad gerencial', requisitos: ['costos'] },
-      'etica': { nombre: 'Ética, ciudadanía, discapacidad e inclusión', requisitos: [] },
-      'talento1': { nombre: 'Administración del talento humano I', requisitos: ['diseno'] },
-      'estadistica2': { nombre: 'Estadística para la toma de decisiones', requisitos: ['estadistica1'] },
-      'antenor': { nombre: 'Vigencia y trascendencia del pensamiento de Antenor', requisitos: [] },
-      'investigacion': { nombre: 'Investigación de mercados', requisitos: ['marketing'] },
-      'operaciones': { nombre: 'Administración de operaciones', requisitos: [] },
-      'ambiente': { nombre: 'Medio ambiente y desarrollo sostenible', requisitos: [] },
-      'talento2': { nombre: 'Administración de talento humano II', requisitos: ['talento1'] },
-      'financiera': { nombre: 'Administración financiera', requisitos: ['matempresarial','contabilidadg'] },
-      'modelo': { nombre: 'Modelo para la toma de decisiones', requisitos: ['estadistica2'] },
-      'metodologia2': { nombre: 'Metodología de la investigación científica', requisitos: ['metodologia'] },
-      'supply': { nombre: 'Global supply y chain management', requisitos: ['operaciones'] },
-      'sociedades': { nombre: 'Sociedades y empresas', requisitos: [] },
-      'userdesign': { nombre: 'User centered design', requisitos: [] },
-      'finanzas': { nombre: 'Finanzas corporativas', requisitos: ['financiera'] },
-      'direcciontalento': { nombre: 'Dirección del talento humano', requisitos: ['talento2'] },
-      'marketinge': { nombre: 'Marketing estratégico', requisitos: ['investigacion'] },
-      'procesos': { nombre: 'Gestión de procesos y de calidad', requisitos: ['supply'] },
-      'publica': { nombre: 'Administración pública', requisitos: ['sociedades'] },
-      'customer': { nombre: 'Customer development', requisitos: ['userdesign'] },
-      'sistemas': { nombre: 'Sistemas de información general', requisitos: ['modelo'] },
-      'electivo1': { nombre: 'Electivo I', requisitos: [] },
-      'planeamiento': { nombre: 'Planeamiento estratégico', requisitos: ['marketinge'] },
-      'proyecto': { nombre: 'Proyecto de investigación', requisitos: ['metodologia2'] },
-      'comercio': { nombre: 'Comercio internacional', requisitos: ['procesos'] },
-      'product': { nombre: 'Product business development', requisitos: ['customer'] },
-      'evaluacion': { nombre: 'Evaluación de proyectos de inversión privada', requisitos: ['finanzas'] },
-      'electivo2': { nombre: 'Electivo II', requisitos: [] },
-      'controller': { nombre: 'Business controller', requisitos: ['publica','planeamiento'] },
-      'tesis1': { nombre: 'Tesis I', requisitos: ['proyecto'] },
-      'gestionemp': { nombre: 'Gestión internacional de empresas', requisitos: ['comercio'] },
-      'innovation': { nombre: 'Innovation management', requisitos: ['product'] },
-      'deontologia': { nombre: 'Deontología profesional', requisitos: [] },
-      'electivo3': { nombre: 'Electivo III', requisitos: [] },
-      'tesis2': { nombre: 'Tesis II', requisitos: ['tesis1'] },
-      'simulacion': { nombre: 'Simulación digital de negocios internacionales', requisitos: ['gestionemp'] },
-      'practicas': { nombre: 'Prácticas preprofesionales', requisitos: ['innovation'] },
-      'electivo4': { nombre: 'Electivo IV', requisitos: [] }
-    };
+    <!-- CICLO 2 -->
+    <div class="curso bloqueado" data-id="recursos"><label><input type="checkbox" disabled /> Recursos digitales</label></div>
+    <div class="curso bloqueado" data-id="comunicacion2"><label><input type="checkbox" disabled /> Comunicación II</label></div>
+    <div class="curso bloqueado" data-id="microeconomia"><label><input type="checkbox" disabled /> Microeconomía</label></div>
+    <div class="curso bloqueado" data-id="contabilidad"><label><input type="checkbox" disabled /> Contabilidad general</label></div>
+    <div class="curso bloqueado" data-id="matematicaemp"><label><input type="checkbox" disabled /> Matemática empresarial</label></div>
+    <div class="curso bloqueado" data-id="filosofia"><label><input type="checkbox" disabled /> Filosofía y pensamiento crítico</label></div>
 
-    const ciclos = {
-      1: ['metodologia','comunicacion1','economia','administracion','matematica'],
-      2: ['recursos','comunicacion2','microeconomia','contabilidad','matempresarial','filosofia'],
-      3: ['realidad','costos','macroeconomia','diseno','estadistica1','responsabilidad'],
-      4: ['marketing','contabilidadg','etica','talento1','estadistica2','antenor'],
-      5: ['investigacion','operaciones','ambiente','talento2','financiera','modelo'],
-      6: ['metodologia2','supply','sociedades','userdesign','finanzas','direcciontalento'],
-      7: ['marketinge','procesos','publica','customer','sistemas','electivo1'],
-      8: ['planeamiento','proyecto','comercio','product','evaluacion','electivo2'],
-      9: ['controller','tesis1','gestionemp','innovation','deontologia','electivo3'],
-      10: ['tesis2','simulacion','practicas','electivo4']
-    };
+    <!-- CICLO 3 -->
+    <div class="curso bloqueado" data-id="realidad"><label><input type="checkbox" disabled /> Realidad nacional y global</label></div>
+    <div class="curso bloqueado" data-id="gestcostos"><label><input type="checkbox" disabled /> Gestión de costos y presupuestos</label></div>
+    <div class="curso bloqueado" data-id="macroeconomia"><label><input type="checkbox" disabled /> Macroeconomía</label></div>
+    <div class="curso bloqueado" data-id="disenoorg"><label><input type="checkbox" disabled /> Diseño organizacional</label></div>
+    <div class="curso bloqueado" data-id="estadisticaap"><label><input type="checkbox" disabled /> Estadística aplicada a los negocios</label></div>
+    <div class="curso bloqueado" data-id="rse"><label><input type="checkbox" disabled /> Responsabilidad social empresarial</label></div>
 
-    const completados = {};
-    const contenedor = document.getElementById('cursos');
+    <!-- CICLO 4 -->
+    <div class="curso bloqueado" data-id="marketing"><label><input type="checkbox" disabled /> Fundamentos del marketing</label></div>
+    <div class="curso bloqueado" data-id="contagerencial"><label><input type="checkbox" disabled /> Contabilidad gerencial</label></div>
+    <div class="curso bloqueado" data-id="etica"><label><input type="checkbox" disabled /> Ética, ciudadanía, discapacidad e inclusión</label></div>
+    <div class="curso bloqueado" data-id="talentohumano1"><label><input type="checkbox" disabled /> Administración del talento humano I</label></div>
+    <div class="curso bloqueado" data-id="estadisticadeci"><label><input type="checkbox" disabled /> Estadística para la toma de decisiones</label></div>
+    <div class="curso bloqueado" data-id="antenor"><label><input type="checkbox" disabled /> Vigencia y trascendencia del pensamiento de Antenor</label></div>
 
-    for (const ciclo in ciclos) {
-      const divCiclo = document.createElement('div');
-      divCiclo.className = 'ciclo';
-      divCiclo.innerHTML = `<h2>Ciclo ${ciclo}</h2>`;
-      ciclos[ciclo].forEach(id => {
-        const divCurso = document.createElement('div');
-        divCurso.id = id;
-        divCurso.className = 'curso';
-        if (cursos[id].requisitos.length) divCurso.classList.add('bloqueado');
-        divCurso.innerText = cursos[id].nombre;
-        divCurso.onclick = () => {
-          if (divCurso.classList.contains('bloqueado')) {
-            alert('Requiere: ' + cursos[id].requisitos.map(r => cursos[r].nombre).join(', '));
-            return;
-          }
-          completados[id] = true;
-          document.getElementById('info').innerText = `Has completado ${cursos[id].nombre}`;
-          for (const key in cursos) {
-            if (cursos[key].requisitos.includes(id)) {
-              if (cursos[key].requisitos.every(r => completados[r])) {
-                document.getElementById(key).classList.remove('bloqueado');
-              }
-            }
-          }
-        };
-        divCiclo.appendChild(divCurso);
-      });
-      contenedor.appendChild(divCiclo);
-    }
-  </script>
+    <!-- CICLO 5 -->
+    <div class="curso bloqueado" data-id="investigacionmercados"><label><input type="checkbox" disabled /> Investigación de mercados</label></div>
+    <div class="curso bloqueado" data-id="operaciones"><label><input type="checkbox" disabled /> Administración de operaciones</label></div>
+    <div class="curso bloqueado" data-id="medioambiente"><label><input type="checkbox" disabled /> Medio ambiente y desarrollo sostenible</label></div>
+    <div class="curso bloqueado" data-id="talentohumano2"><label><input type="checkbox" disabled /> Administración de talento humano II</label></div>
+    <div class="curso bloqueado" data-id="financiera"><label><input type="checkbox" disabled /> Administración financiera</label></div>
+    <div class="curso bloqueado" data-id="modelodeci"><label><input type="checkbox" disabled /> Modelo para la toma de decisiones</label></div>
+
+    <!-- CICLO 6 -->
+    <div class="curso bloqueado" data-id="metodoinvestigacion"><label><input type="checkbox" disabled /> Metodología de la investigación científica</label></div>
+    <div class="curso bloqueado" data-id="supplychain"><label><input type="checkbox" disabled /> Global supply and chain management</label></div>
+    <div class="curso bloqueado" data-id="sociedades"><label><input type="checkbox" disabled /> Sociedades y empresas</label></div>
+    <div class="curso bloqueado" data-id="usercentered"><label><input type="checkbox" disabled /> User Centered Design</label></div>
+    <div class="curso bloqueado" data-id="finanzascorporativas"><label><input type="checkbox" disabled /> Finanzas corporativas</label></div>
+    <div class="curso bloqueado" data-id="direccionth"><label><input type="checkbox" disabled /> Dirección del talento humano</label></div>
+
+    <!-- CICLO 7 -->
+    <div class="curso bloqueado" data-id="marketingestrategico"><label><input type="checkbox" disabled /> Marketing estratégico</label></div>
+    <div class="curso bloqueado" data-id="procesoscalidad"><label><input type="checkbox" disabled /> Gestión de procesos y de calidad</label></div>
+    <div class="curso bloqueado" data-id="publica"><label><input type="checkbox" disabled /> Administración pública</label></div>
+    <div class="curso bloqueado" data-id="customerdev"><label><input type="checkbox" disabled /> Customer Development</label></div>
+    <div class="curso bloqueado" data-id="sistemasinfo"><label><input type="checkbox" disabled /> Sistemas de información general</label></div>
+    <div class="curso bloqueado" data-id="electivo1"><label><input type="checkbox" disabled /> Electivo I</label></div>
+
+    <!-- CICLO 8 -->
+    <div class="curso bloqueado" data-id="planeamiento"><label><input type="checkbox" disabled /> Planeamiento estratégico</label></div>
+    <div class="curso bloqueado" data-id="proyectoinvestigacion"><label><input type="checkbox" disabled /> Proyecto de investigación</label></div>
+    <div class="curso bloqueado" data-id="comercioint"><label><input type="checkbox" disabled /> Comercio internacional</label></div>
+    <div class="curso bloqueado" data-id="productbusiness"><label><input type="checkbox" disabled /> Product business development</label></div>
+    <div class="curso bloqueado" data-id="evaluacionproyectos"><label><input type="checkbox" disabled /> Evaluación de proyectos de inversión privada</label></div>
+    <div class="curso bloqueado" data-id="electivo2"><label><input type="checkbox" disabled /> Electivo II</label></div>
+
+    <!-- CICLO 9 -->
+    <div class="curso bloqueado" data-id="businesscontroller"><label><input type="checkbox" disabled /> Business controller</label></div>
+    <div class="curso bloqueado" data-id="tesis1"><label><input type="checkbox" disabled /> Tesis I</label></div>
+    <div class="curso bloqueado" data-id="gestionint"><label><input type="checkbox" disabled /> Gestión internacional de empresas</label></div>
+    <div class="curso bloqueado" data-id="innovation"><label><input type="checkbox" disabled /> Innovation management</label></div>
+    <div class="curso bloqueado" data-id="deontologia"><label><input type="checkbox" disabled /> Deontología profesional</label></div>
+    <div class="curso bloqueado" data-id="electivo3"><label><input type="checkbox" disabled /> Electivo III</label></div>
+
+    <!-- CICLO 10 -->
+    <div class="curso bloqueado" data-id="tesis2"><label><input type="checkbox" disabled /> Tesis II</label></div>
+    <div class="curso bloqueado" data-id="simulacion"><label><input type="checkbox" disabled /> Simulación digital de negocios internacionales</label></div>
+    <div class="curso bloqueado" data-id="practicas"><label><input type="checkbox" disabled /> Prácticas preprofesionales</label></div>
+    <div class="curso bloqueado" data-id="electivo4"><label><input type="checkbox" disabled /> Electivo IV</label></div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
