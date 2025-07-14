@@ -1,57 +1,68 @@
-// Mapa de requisitos: clave = curso base, valor = cursos desbloqueados
-const dependencias = {
-  'comunicacion1': ['comunicacion2'],
-  'economia': ['microeconomia'],
-  'matematica': ['matematicaemp'],
-  'contabilidad': ['gestcostos'],
-  'microeconomia': ['macroeconomia'],
-  'administracion': ['disenoorg'],
-  'matematicaemp': ['estadisticaap', 'financiera'],
-  'gestcostos': ['contagerencial'],
-  'disenoorg': ['talentohumano1'],
-  'estadisticaap': ['estadisticadeci'],
-  'contagerencial': ['financiera'],
-  'marketing': ['investigacionmercados'],
-  'talentohumano1': ['talentohumano2'],
-  'estadisticadeci': ['modelodeci'],
-  'metodologia': ['metodoinvestigacion'],
-  'operaciones': ['supplychain'],
-  'financiera': ['finanzascorporativas'],
-  'talentohumano2': ['direccionth'],
-  'investigacionmercados': ['marketingestrategico'],
-  'supplychain': ['procesoscalidad'],
-  'sociedades': ['publica'],
-  'usercentered': ['customerdev'],
-  'modelodeci': ['sistemasinfo'],
-  'marketingestrategico': ['planeamiento'],
-  'metodoinvestigacion': ['proyectoinvestigacion'],
-  'procesoscalidad': ['comercioint'],
-  'customerdev': ['productbusiness'],
-  'finanzascorporativas': ['evaluacionproyectos'],
-  'publica': ['businesscontroller'],
-  'planeamiento': ['businesscontroller'],
-  'proyectoinvestigacion': ['tesis1'],
-  'comercioint': ['gestionint'],
-  'productbusiness': ['innovation'],
-  'gestionint': ['simulacion'],
-  'innovation': ['practicas'],
-  'tesis1': ['tesis2']
+// Define relaciones de requisitos
+const requisitos = {
+  comunicacion2: ["comunicacion1"],
+  microeconomia: ["economia"],
+  matematicaemp: ["matematica"],
+  gestcostos: ["contabilidad"],
+  macroeconomia: ["microeconomia"],
+  disenoorg: ["administracion"],
+  estadisticaap: ["matematicaemp"],
+  contagerencial: ["gestcostos"],
+  talentohumano1: ["disenoorg"],
+  estadisticadeci: ["estadisticaap"],
+  investigacionmercados: ["marketing"],
+  talentohumano2: ["talentohumano1"],
+  financiera: ["matematicaemp", "contagerencial"],
+  modelodeci: ["estadisticadeci"],
+  metodoinvestigacion: ["metodologia"],
+  supplychain: ["operaciones"],
+  finanzascorporativas: ["financiera"],
+  direccionth: ["talentohumano2"],
+  marketingestrategico: ["investigacionmercados"],
+  procesoscalidad: ["supplychain"],
+  publica: ["sociedades"],
+  customerdev: ["usercentered"],
+  sistemasinfo: ["modelodeci"],
+  planeamiento: ["marketingestrategico"],
+  proyectoinvestigacion: ["metodoinvestigacion"],
+  comercioint: ["procesoscalidad"],
+  productbusiness: ["customerdev"],
+  evaluacionproyectos: ["finanzascorporativas"],
+  businesscontroller: ["publica", "planeamiento"],
+  tesis1: ["proyectoinvestigacion"],
+  gestionint: ["comercioint"],
+  innovation: ["productbusiness"],
+  tesis2: ["tesis1"],
+  simulacion: ["gestionint"],
+  practicas: ["innovation"]
 };
 
-// Escucha todos los checks
+// Escucha clicks en los checkboxes
 document.querySelectorAll('.curso input[type="checkbox"]').forEach(checkbox => {
-  checkbox.addEventListener('change', e => {
-    const parent = e.target.closest('.curso');
-    const id = parent.dataset.id;
-
-    if (e.target.checked && dependencias[id]) {
-      dependencias[id].forEach(dep => {
-        const desbloquear = document.querySelector(`.curso[data-id="${dep}"]`);
-        if (desbloquear) {
-          desbloquear.classList.remove('bloqueado');
-          desbloquear.querySelector('input').disabled = false;
-        }
-      });
+  checkbox.addEventListener('change', function () {
+    if (this.checked) {
+      const cursoId = this.closest('.curso').dataset.id;
+      desbloquearCursosDependientes(cursoId);
     }
   });
 });
+
+// Función que desbloquea cursos cuyo requisito es el curso aprobado
+function desbloquearCursosDependientes(cursoAprobado) {
+  for (const [curso, prereqs] of Object.entries(requisitos)) {
+    if (prereqs.includes(cursoAprobado)) {
+      // Verifica si todos los requisitos de este curso están aprobados
+      const todosAprobados = prereqs.every(prereq => {
+        const prereqCheckbox = document.querySelector(`.curso[data-id="${prereq}"] input[type="checkbox"]`);
+        return prereqCheckbox && prereqCheckbox.checked;
+      });
+
+      if (todosAprobados) {
+        const cursoDiv = document.querySelector(`.curso[data-id="${curso}"]`);
+        cursoDiv.classList.remove('bloqueado');
+        const input = cursoDiv.querySelector('input[type="checkbox"]');
+        input.disabled = false;
+      }
+    }
+  }
+}
