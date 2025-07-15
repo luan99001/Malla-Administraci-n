@@ -62,16 +62,8 @@ h1 {
   color: #fff;
 }
 
-.curso input[type="checkbox"]:checked ~ label {
-  font-weight: bold;
-}
-
-.curso input[type="checkbox"]:checked {
-  accent-color: purple;
-}
-
 .curso.completado {
-  background: #9c27b0; /* Morado aprobado */
+  background: #9c27b0; /* Morado cuando se marca */
   color: #fff;
 }
 
