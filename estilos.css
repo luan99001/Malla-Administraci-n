@@ -1,3 +1,39 @@
+body {
+  background: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  color: #c2185b;
+  margin-bottom: 40px;
+}
+
+.malla {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.ciclo {
+  border: 2px solid #f48fb1;
+  border-radius: 10px;
+  padding: 20px;
+  background: #ffeef5;
+  width: 250px;
+}
+
+.ciclo h2 {
+  background: #f06292;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin: -20px -20px 20px -20px;
+}
+
 .curso {
   border: 2px solid #f06292;
   border-radius: 8px;
@@ -6,18 +42,31 @@
   transition: background 0.3s, opacity 0.3s;
 }
 
+.curso label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.curso input[type="checkbox"] {
+  margin-right: 8px;
+}
+
 .curso.bloqueado {
   background: #fce4ec; /* Rosa claro bloqueado */
   opacity: 0.5;
 }
 
 .curso:not(.bloqueado) {
-  background: #f06292; /* Rosa fuerte */
+  background: #f06292; /* Rosa fuerte desbloqueado */
   color: #fff;
 }
 
 .curso.completado {
-  background: #7b1fa2 !important; /* Morado */
-  border-color: #7b1fa2;
+  background: #c2185b !important; /* Rosa oscuro cuando se marca */
+  border-color: #c2185b;
   color: #fff;
+}
+
+.curso input[type="checkbox"]:disabled + label {
+  cursor: not-allowed;
 }
