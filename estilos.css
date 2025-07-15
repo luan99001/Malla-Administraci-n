@@ -1,39 +1,3 @@
-body {
-  background: #fff;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 20px;
-  color: #333;
-}
-
-h1 {
-  color: #c2185b;
-  margin-bottom: 40px;
-}
-
-.malla {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-}
-
-.ciclo {
-  border: 2px solid #f48fb1;
-  border-radius: 10px;
-  padding: 20px;
-  background: #ffeef5;
-  width: 250px;
-}
-
-.ciclo h2 {
-  background: #f06292;
-  color: #fff;
-  padding: 10px;
-  border-radius: 8px;
-  margin: -20px -20px 20px -20px;
-}
-
 .curso {
   border: 2px solid #f06292;
   border-radius: 8px;
@@ -42,31 +6,18 @@ h1 {
   transition: background 0.3s, opacity 0.3s;
 }
 
-.curso label {
-  cursor: pointer;
-  user-select: none;
-}
-
-.curso input[type="checkbox"] {
-  margin-right: 8px;
-}
-
 .curso.bloqueado {
-  background: #fce4ec; /* Rosa clarito bloqueado */
-  opacity: 0.6;
-  cursor: not-allowed;
+  background: #fce4ec; /* Rosa claro bloqueado */
+  opacity: 0.5;
 }
 
 .curso:not(.bloqueado) {
-  background: #f06292; /* Rosa fuerte desbloqueado */
+  background: #f06292; /* Rosa fuerte */
   color: #fff;
 }
 
 .curso.completado {
-  background: #9c27b0; /* Morado cuando se marca */
+  background: #7b1fa2 !important; /* Morado */
+  border-color: #7b1fa2;
   color: #fff;
-}
-
-.curso input[type="checkbox"]:disabled + label {
-  cursor: not-allowed;
 }
