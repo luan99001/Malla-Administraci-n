@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-  color: #c2185b; /* rosa fuerte */
+  color: #c2185b;
   margin-bottom: 40px;
 }
 
@@ -19,7 +19,7 @@ h1 {
 }
 
 .ciclo {
-  border: 2px solid #f48fb1; /* rosa suave */
+  border: 2px solid #f48fb1;
   border-radius: 10px;
   padding: 20px;
   background: #ffeef5;
@@ -35,7 +35,6 @@ h1 {
 }
 
 .curso {
-  background: #fff;
   border: 2px solid #f06292;
   border-radius: 8px;
   margin: 8px 0;
@@ -43,22 +42,37 @@ h1 {
   transition: background 0.3s, opacity 0.3s;
 }
 
-.curso input[type="checkbox"] {
-  margin-right: 8px;
-}
-
-.curso.bloqueado {
-  background: #f8bbd0; /* rosa muy suave para bloquear */
-  opacity: 0.5;
-}
-
 .curso label {
   cursor: pointer;
   user-select: none;
 }
 
-.curso.bloqueado label {
+.curso input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.curso.bloqueado {
+  background: #fce4ec; /* Rosa clarito bloqueado */
+  opacity: 0.6;
   cursor: not-allowed;
+}
+
+.curso:not(.bloqueado) {
+  background: #f06292; /* Rosa fuerte desbloqueado */
+  color: #fff;
+}
+
+.curso input[type="checkbox"]:checked ~ label {
+  font-weight: bold;
+}
+
+.curso input[type="checkbox"]:checked {
+  accent-color: purple;
+}
+
+.curso.completado {
+  background: #9c27b0; /* Morado aprobado */
+  color: #fff;
 }
 
 .curso input[type="checkbox"]:disabled + label {
