@@ -62,9 +62,9 @@ h1 {
 }
 
 .curso.completado {
-  background: #c2185b !important; /* Rosa oscuro cuando se marca */
-  border-color: #c2185b;
-  color: #fff;
+  background: #c2185b !important; /* ✅ ROSA OSCURO ✅ */
+  border-color: #c2185b !important;
+  color: #fff !important;
 }
 
 .curso input[type="checkbox"]:disabled + label {
