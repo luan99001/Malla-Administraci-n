@@ -106,3 +106,6 @@ function loadProgress() {
 }
 
 loadProgress();
+
+console.log("Despliegue forzado");
+
